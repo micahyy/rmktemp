@@ -7,7 +7,7 @@ manufacturer = "CaiZiMao"
 chip = "nrf52840"
 
 [features]
-# 启用并配置WS2812 RGB灯光
+vial = { enabled = true }
 rgb = { type = "WS2812", pin = "P0_03", num = 17, brightness = 64, enabled = true }
 
 [matrix]
