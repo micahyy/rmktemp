@@ -57,7 +57,7 @@ my_paste = "WM(V, LCtrl)"
 
 [light]
 # All light pins are high-active by default, uncomment if you want it to be low-active
-# capslock.pin = "P1_11"
+capslock.pin = "P1_11"
 # capslock.low_active = false
 # scrolllock.pin = "PA3"
 # scrolllock.low_active = true
@@ -66,7 +66,7 @@ my_paste = "WM(V, LCtrl)"
 # numslock.low_active = true
 
 # 蓝牙连接状态指示灯
-ble_led.pin = "P1_11"      # 请替换为你实际想用的、空闲的GPIO引脚，例如 P1_11
+# ble_led.pin = "P1_11"      # 请替换为你实际想用的、空闲的GPIO引脚，例如 P1_11
 # ble.low_active = false # 默认高电平点亮，如果LED是低电平有效则设为 true
 
 
