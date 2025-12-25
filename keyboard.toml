@@ -10,13 +10,6 @@ chip = "nrf52840"
 # 启用并配置WS2812 RGB灯光
 rgb = { type = "WS2812", pin = "P0_03", num = 17, brightness = 64, enabled = true }
 
-[behavior.init]
-# 初始化时执行的GPIO操作列表
-gpio_actions = [
-  # 将 P1_10 引脚设置为高电平，以开启MT9700，为WS2812供电
-  { pin = "P1_10", level = "high", direction = "output" },
-]
-
 [matrix]
 # Row and col pins are mandatory
 row_pins = ["P0_10", "P0_30", "P0_31", "P0_29", "P0_02"]
