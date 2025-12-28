@@ -44,7 +44,7 @@ encoders = [["AudioVolUp", "AudioVolDown"]]
 [[layer]]
 name = "second_layer"
 keys = """
-TD(1)  EE_CLR        WM(W,LShift)         No
+No  No       WM(W,LShift)         No
 DF(0)  LT(1, Space) LM(0, LShift | RGui) 
 OSL(0) OSM(LAlt)    TH(Kp1, Kp2)        SHIFTED(Kp2)
     @my_copy        @my_paste
