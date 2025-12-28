@@ -31,8 +31,8 @@ matrix_map = """
 [[layer]]
 name = "base_layer"
 keys = """
-NumLock KpSlash KpAsterisk KpMinus
-Kp7     Kp8     Kp9        KpPlus
+NumLock    KpSlash    KpAsterisk    KpMinus
+Kp7        Kp8        Kp9           KpPlus
 Kp4     Kp5     Kp6
 Kp1     Kp2     Kp3        KpEnter
     Kp0         KpDot
@@ -60,7 +60,7 @@ my_paste = "WM(V, LCtrl)"
 capslock.pin = "P1_13"
 capslock.low_active = false
 scrolllock.pin = "P0_28"
-scrolllock.low_active = true
+scrolllock.low_active = false
 # Just ignore if no light pin is used for it
 numslock.pin = "P1_11"
 numslock.low_active = false 
