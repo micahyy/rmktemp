@@ -52,6 +52,17 @@ OSL(0) OSM(LAlt)    TH(Kp1, Kp2)        SHIFTED(Kp2)
 # Encoder 0 - CW: BrightnessUp, CCW: BrightnessDown
 encoders = [["BrightnessUp", "BrightnessDown"]]
 
+[[layer]]
+name = "3rd_layer"
+keys = """
+No  No       No         No
+No  No       No         No
+No  No       No         
+No  No       No         No
+No        No       
+"""
+
+
 [aliases]
 my_copy = "WM(C, LCtrl)"
 my_paste = "WM(V, LCtrl)"
