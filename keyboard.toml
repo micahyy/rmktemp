@@ -80,18 +80,16 @@ battery_adc_pin = "P0_04"
 adc_divider_measured = 250
 adc_divider_total = 500
 
-# 使用 charge_led 作为蓝牙连接指示灯（RMK 0.6.0 支持）
-# 这会控制一个 LED 在蓝牙连接时亮起
-charge_led = "P1_11"  # 使用 NumLock LED 引脚
-
-# 可选：充电状态检测引脚（如果没有充电功能可以注释掉）
-# charge_state = "P0_03"
 
 # 可选：设置蓝牙发射功率（0-8，默认4）
 default_tx_power = 4
 
 # 使用 2M PHY 提高传输速度
 ble_use_2m_phy = true
+
+[ble.charge_led]
+pin = "P1_11"
+low_active = false
 
 [behavior.combo]
 timeout = "150ms"
