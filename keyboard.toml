@@ -114,6 +114,22 @@ combos = [
   ], output = "X" },
 ]
 
+
+[behaviors.clear_eeprom]
+type = "custom"
+action = "clear_eeprom"
+trigger = "boot"  # 在启动时触发
+# 或者使用按键触发
+# trigger = "key_combo"
+# combo = ["esc", "fn"]
+
+# 配置 EEPROM 区域
+[storage]
+type = "internal_flash"
+start_address = "0xF0000"
+size = "0x4000"
+
+
 [behavior.fork]
 forks = [
   # Shift + '.' output ':' key
