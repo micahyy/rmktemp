@@ -1,16 +1,3 @@
-# keyboard.toml
-[macros.clear_eeprom]
-steps = [
-    { type = "delay", ms = 1000 },
-    { type = "command", command = "clear_storage" },
-    { type = "delay", ms = 1000 },
-    { type = "command", command = "reset" },
-]
-
-# 将宏绑定到按键
-[keymap.layer0]
-# ...
-[0, 0] = { tap = "a", hold = "clear_eeprom" }  # 按住 A 键清除
 
 [keyboard]
 name = "CZMAOWL17"
@@ -45,7 +32,7 @@ matrix_map = """
 [[layer]]
 name = "base_layer"
 keys = """
-NumLock    KpSlash    KpAsterisk    KpMinus
+LT(1,NumLock)    KpSlash    KpAsterisk    KpMinus
 Kp7        Kp8        Kp9           KpPlus
 Kp4        Kp5        Kp6
 Kp1        Kp2        Kp3           KPENTER
@@ -57,7 +44,7 @@ encoders = [["AudioVolUp", "AudioVolDown"]]
 [[layer]]
 name = "second_layer"
 keys = """
-TD(1)  TO(0)        WM(W,LShift)         No
+TD(1)  clear_eeprom        WM(W,LShift)         No
 DF(0)  LT(1, Space) LM(0, LShift | RGui) 
 OSL(0) OSM(LAlt)    TH(Kp1, Kp2)        SHIFTED(Kp2)
     @my_copy        @my_paste
