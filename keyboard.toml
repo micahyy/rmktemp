@@ -1,95 +1,16 @@
-// main.rs
-#![no_std]
-#![no_main]
+# keyboard.toml
+[macros.clear_eeprom]
+steps = [
+    { type = "delay", ms = 1000 },
+    { type = "command", command = "clear_storage" },
+    { type = "delay", ms = 1000 },
+    { type = "command", command = "reset" },
+]
 
-use defmt::*;
-use embassy_executor::Spawner;
-use embassy_nrf::peripherals;
-use rmk::keyboard::{Keyboard, KeyboardConfig};
-use rmk::keyboard_matrix::KeyboardMatrix;
-use rmk::storage::Storage;
-
-// 定义你的键盘矩阵大小
-const ROWS: usize = 4;
-const COLS: usize = 12;
-
-#[embassy_executor::main]
-async fn main(_spawner: Spawner) {
-    // 初始化硬件
-    let p = embassy_nrf::init(Default::default());
-    
-    // ==================== 关键部分开始 ====================
-    // 强制清除 EEPROM - 每次启动都执行
-    info!("正在清除 EEPROM...");
-    force_clear_eeprom();
-    info!("EEPROM 清除完成");
-    // ==================== 关键部分结束 ====================
-    
-    // 创建键盘矩阵
-    let matrix = KeyboardMatrix::new(/* 你的矩阵配置 */);
-    
-    // 创建键盘配置
-    let config = KeyboardConfig::default();
-    
-    // 创建键盘实例
-    let keyboard = Keyboard::new(matrix, config);
-    
-    // 启动键盘
-    keyboard.run().await;
-}
-
-/// 强制清除 EEPROM
-fn force_clear_eeprom() {
-    use core::ptr;
-    
-    // nRF52840 的 Flash 地址范围
-    // RMK 通常将 EEPROM 数据放在这里
-    const FLASH_START: u32 = 0x000F_0000;
-    const FLASH_SIZE: u32 = 0x0000_4000;  // 16KB
-    
-    info!("擦除 Flash 区域: 0x{:08X} - 0x{:08X}", 
-          FLASH_START, FLASH_START + FLASH_SIZE);
-    
-    // 注意：在实际 Flash 上不能这样直接写
-    // 这里只是示意，实际需要调用 Flash 驱动
-    unsafe {
-        // 获取 Flash 外设
-        let flash = peripherals::FLASH0::steal();
-        
-        // 使能 Flash 写入
-        flash.config.write(|w| w.wen().enabled());
-        
-        // 擦除 Flash 扇区（每个扇区 4KB）
-        for sector in 0..(FLASH_SIZE / 4096) {
-            let addr = FLASH_START + sector * 4096;
-            flash.erasepage.write(|w| unsafe { w.bits(addr) });
-            flash.tasks_erase_start.write(|w| w.tasks_erase_start().trigger());
-            
-            // 等待擦除完成
-            while flash.events_ready.read().bits() == 0 {}
-            flash.events_ready.write(|w| w);
-        }
-        
-        // 禁用 Flash 写入
-        flash.config.write(|w| w.wen().disabled());
-    }
-    
-    // 或者使用 RMK 的存储接口（如果可用）
-    clear_rmk_storage();
-}
-
-/// 使用 RMK 存储接口清除
-fn clear_rmk_storage() {
-    // 尝试初始化并清除存储
-    if let Ok(mut storage) = Storage::new() {
-        match storage.clear() {
-            Ok(_) => info!("RMK 存储清除成功"),
-            Err(e) => error!("RMK 存储清除失败: {:?}", e),
-        }
-    } else {
-        info!("无法初始化 RMK 存储，使用直接 Flash 操作");
-    }
-}
+# 将宏绑定到按键
+[keymap.layer0]
+# ...
+[0, 0] = { tap = "a", hold = "clear_eeprom" }  # 按住 A 键清除
 
 [keyboard]
 name = "CZMAOWL17"
