@@ -77,14 +77,12 @@ scrolllock.low_active = false
 numslock.pin = "P1_11"
 numslock.low_active = false 
 
-# 蓝牙连接状态指示灯
-# ble_led.pin = "P1_11"      # 请替换为你实际想用的、空闲的GPIO引脚，例如 P1_11
-# ble.low_active = false # 默认高电平点亮，如果LED是低电平有效则设为 true
+
 
 [storage]
 # Storage feature is enabled by default
 # enabled = false
-# clear_storage = true
+clear_storage = true
 
 [ble]
 enabled = true
@@ -113,21 +111,6 @@ combos = [
     "D",
   ], output = "X" },
 ]
-
-
-[behaviors.clear_eeprom]
-type = "custom"
-action = "clear_eeprom"
-trigger = "boot"  # 在启动时触发
-# 或者使用按键触发
-# trigger = "key_combo"
-# combo = ["esc", "fn"]
-
-# 配置 EEPROM 区域
-[storage]
-type = "internal_flash"
-start_address = "0xF0000"
-size = "0x4000"
 
 
 [behavior.fork]
