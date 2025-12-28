@@ -1,4 +1,3 @@
-
 [keyboard]
 name = "CZMAOWL17"
 product_name = "Wireless17"
@@ -11,11 +10,8 @@ chip = "nrf52840"
 vial = { enabled = true }
 
 [matrix]
-# Row and col pins are mandatory
 row_pins = ["P0_10", "P0_30", "P0_31", "P0_29", "P0_02"]
 col_pins = ["P0_05", "P0_13", "P0_24", "P0_09"]
-# RMK uses col2row as the default matrix diode direction, if you want to use a row2col matrix, add `row2col = true`
-# row2col = true
 
 [layout]
 rows = 5
@@ -38,7 +34,6 @@ Kp4        Kp5        Kp6
 Kp1        Kp2        Kp3           KPENTER
     Kp0         KpDot
 """
-# Encoder 0 - CW: AudioVolUp, CCW: AudioVolDown
 encoders = [["AudioVolUp", "AudioVolDown"]]
 
 [[layer]]
@@ -49,7 +44,6 @@ DF(0)  LT(1, Space) LM(0, LShift | RGui)
 OSL(0) OSM(LAlt)    TH(Kp1, Kp2)        SHIFTED(Kp2)
     @my_copy        @my_paste
 """
-# Encoder 0 - CW: BrightnessUp, CCW: BrightnessDown
 encoders = [["BrightnessUp", "BrightnessDown"]]
 
 [[layer]]
@@ -62,101 +56,61 @@ No  No       No         No
 No        No       
 """
 
-
 [aliases]
 my_copy = "WM(C, LCtrl)"
 my_paste = "WM(V, LCtrl)"
 
 [light]
-# All light pins are high-active by default, uncomment if you want it to be low-active
-# capslock.pin = "P1_13"
-# capslock.low_active = false
-# scrolllock.pin = "P0_28"
-# scrolllock.low_active = false
-# Just ignore if no light pin is used for it
+capslock.pin = "P1_13"
+capslock.low_active = false
+scrolllock.pin = "P0_28"
+scrolllock.low_active = false
+# 这是我们要用来显示蓝牙状态的 LED
 numslock.pin = "P1_11"
 numslock.low_active = false 
 
-
-
+# ==================== 关键修改：移除 indicators 字段 ====================
 [storage]
-# Storage feature is enabled by default
-# enabled = false
 clear_storage = true
 
+# ==================== 修正的蓝牙配置 ====================
 [ble]
 enabled = true
-# vddh has an internal voltage divider
 battery_adc_pin = "P0_04"
 adc_divider_measured = 250
 adc_divider_total = 500
 
-[ble.indicators]
-# 连接状态 LED（选择一个空闲的 GPIO 引脚）
-# 建议使用 P1_10、P0_26 等空闲引脚
-connected_led_pin = "P1_13"
-connected_led_low_active = false  # 默认高电平点亮
+# 使用 charge_led 作为蓝牙连接指示灯（RMK 0.6.0 支持）
+# 这会控制一个 LED 在蓝牙连接时亮起
+charge_led = "P1_11"  # 使用 NumLock LED 引脚
 
-# 广播状态 LED（可选）
-advertising_led_pin = "P0_28"
-advertising_led_low_active = false
+# 可选：充电状态检测引脚（如果没有充电功能可以注释掉）
+# charge_state = "P0_03"
 
+# 可选：设置蓝牙发射功率（0-8，默认4）
+default_tx_power = 4
 
+# 使用 2M PHY 提高传输速度
+ble_use_2m_phy = true
 
 [behavior.combo]
 timeout = "150ms"
 combos = [
-  # Press J and K keys simultaneously to output "L"
-  { actions = [
-    "J",
-    "K",
-  ], output = "L" },
-  # Press F and D keys simultaneously to switch to layer 2, but only valid on layer 0
-  { actions = [
-    "F",
-    "D",
-  ], output = "TO(1)", layer = 0 },
-  # Three-key combo, press A, S, and D keys to output "X"
-  { actions = [
-    "A",
-    "S",
-    "D",
-  ], output = "X" },
+  { actions = ["J", "K"], output = "L" },
+  { actions = ["F", "D"], output = "TO(1)", layer = 0 },
+  { actions = ["A", "S", "D"], output = "X" },
 ]
-
 
 [behavior.fork]
 forks = [
-  # Shift + '.' output ':' key
   { trigger = "Dot", negative_output = "Dot", positive_output = "WM(Semicolon, LShift)", match_any = "LShift|RShift" },
-
-  # Shift + ',' output ';' key but only if no Alt is pressed
   { trigger = "Comma", negative_output = "Comma", positive_output = "Semicolon", match_any = "LShift|RShift", match_none = "LAlt|RAlt" },
-
-  # left bracket outputs by default '{', with shifts pressed outputs '['  
   { trigger = "LeftBracket", negative_output = "WM(LeftBracket, LShift)", positive_output = "LeftBracket", match_any = "LShift|RShift" },
-
-  # Flip the effect of shift on 'x'/'X'
   { trigger = "X", negative_output = "WM(X, LShift)", positive_output = "X", match_any = "LShift|RShift" },
-
-  # F24 usually outputs 'a', except when Left Shift or Ctrl pressed, in that case triggers a macro 
   { trigger = "F24", negative_output = "A", positive_output = "Macro1", match_any = "LShift|LCtrl" },
-
-  # Swap Z and Y keys if MouseBtn1 is pressed (on the keyboard) (Note that these must not be bindable to avoid infinite fork loops!) 
   { trigger = "Y", negative_output = "Y", positive_output = "Z", match_any = "MouseBtn1", bindable = false },
   { trigger = "Z", negative_output = "Z", positive_output = "Y", match_any = "MouseBtn1", bindable = false },
-
-  # Shift + Backspace output Delete key (inside a layer tap/hold)
   { trigger = "LT(2,Backspace)", negative_output = "LT(2,Backspace)", positive_output = "LT(2,Delete)", match_any = "LShift|RShift" },
-
-  # Ctrl + play/pause will send next track. MediaPlayPause -> MediaNextTrack
-  # Ctrl + Shift + play/pause will send previous track. MediaPlayPause -> MediaPrevTrack
-  # Alt + play/pause will send volume up. MediaPlayPause -> AudioVolUp
-  # Alt + Shift + play/pause will send volume down. MediaPlayPause -> AudioVolDown
-  # Ctrl + Alt + play/pause will send brightness up. MediaPlayPause -> BrightnessUp
-  # Ctrl + Alt + Shift + play/pause will send brightness down. MediaPlayPause -> BrightnessDown
-  # ( Note that the trigger and immediate trigger keys of the fork chain could be 'virtual keys', 
-  #   which will never output, like F23, but here multiple overrides demonstrated.)
   { trigger = "MediaPlayPause", negative_output = "MediaPlayPause", positive_output = "MediaNextTrack", match_any = "LCtrl|RCtrl", bindable = true },
   { trigger = "MediaNextTrack", negative_output = "MediaNextTrack", positive_output = "BrightnessUp", match_any = "LAlt|RAlt", bindable = true },
   { trigger = "BrightnessUp", negative_output = "BrightnessUp", positive_output = "BrightnessDown", match_any = "LShift|RShift", bindable = false },
@@ -169,11 +123,7 @@ forks = [
 combo_max_num = 128
 fork_max_num = 16
 
-# IGNORE/DONT-INCLUDE THIS SECTION Unless you're using custom nRF52840 based board (Eg not a nice!nano)
 [chip.nrf52840]
-# DCDC regulator 0 enabled (default: true)
 dcdc_reg0 = true
-# DCDC regulator 1 enabled (default: true)
 dcdc_reg1 = true
-# DCDC regulator 0 voltage: "3V3" or "1V8" (default: "3V3")
 dcdc_reg0_voltage = "3V3"
