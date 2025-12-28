@@ -20,7 +20,7 @@ col_pins = ["P0_05", "P0_13", "P0_24", "P0_09"]
 [layout]
 rows = 5
 cols = 4
-layers = 2
+layers = 10
 matrix_map = """
 (0,0) (0,1) (0,2) (0,3)
 (1,0) (1,1) (1,2) (1,3)
