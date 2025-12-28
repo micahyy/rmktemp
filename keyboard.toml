@@ -79,7 +79,7 @@ enabled = true
 battery_adc_pin = "P0_04"
 adc_divider_measured = 250
 adc_divider_total = 500
-
+charge_state = "P1_11"
 
 # 可选：设置蓝牙发射功率（0-8，默认4）
 default_tx_power = 4
@@ -87,9 +87,7 @@ default_tx_power = 4
 # 使用 2M PHY 提高传输速度
 ble_use_2m_phy = true
 
-[ble.charge_led]
-pin = "P1_11"
-low_active = false
+
 
 [behavior.combo]
 timeout = "150ms"
