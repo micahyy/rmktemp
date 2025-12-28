@@ -34,7 +34,7 @@ keys = """
 NumLock KpSlash KpAsterisk KpMinus
 Kp7     Kp8     Kp9        KpPlus
 Kp4     Kp5     Kp6
-Kp1     Kp2     Kp3        Enter
+Kp1     Kp2     Kp3        KpEnter
     Kp0         KpDot
 """
 # Encoder 0 - CW: AudioVolUp, CCW: AudioVolDown
@@ -57,13 +57,13 @@ my_paste = "WM(V, LCtrl)"
 
 [light]
 # All light pins are high-active by default, uncomment if you want it to be low-active
-# capslock.pin = "P1_11"
-# capslock.low_active = false
-# scrolllock.pin = "PA3"
-# scrolllock.low_active = true
+capslock.pin = "P1_13"
+capslock.low_active = false
+scrolllock.pin = "P0_28"
+scrolllock.low_active = true
 # Just ignore if no light pin is used for it
-# numslock.pin = "P1_11"
-# numslock.low_active = false #BUG,按下时灯亮，松开后灯灭；正常状态应该按下后常亮啊？？》？
+numslock.pin = "P1_11"
+numslock.low_active = false 
 
 # 蓝牙连接状态指示灯
 # ble_led.pin = "P1_11"      # 请替换为你实际想用的、空闲的GPIO引脚，例如 P1_11
