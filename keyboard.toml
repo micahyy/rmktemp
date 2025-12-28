@@ -69,10 +69,10 @@ my_paste = "WM(V, LCtrl)"
 
 [light]
 # All light pins are high-active by default, uncomment if you want it to be low-active
-capslock.pin = "P1_13"
-capslock.low_active = false
-scrolllock.pin = "P0_28"
-scrolllock.low_active = false
+# capslock.pin = "P1_13"
+# capslock.low_active = false
+# scrolllock.pin = "P0_28"
+# scrolllock.low_active = false
 # Just ignore if no light pin is used for it
 numslock.pin = "P1_11"
 numslock.low_active = false 
@@ -90,6 +90,18 @@ enabled = true
 battery_adc_pin = "P0_04"
 adc_divider_measured = 250
 adc_divider_total = 500
+
+[ble.indicators]
+# 连接状态 LED（选择一个空闲的 GPIO 引脚）
+# 建议使用 P1_10、P0_26 等空闲引脚
+connected_led_pin = "P1_13"
+connected_led_low_active = false  # 默认高电平点亮
+
+# 广播状态 LED（可选）
+advertising_led_pin = "P0_28"
+advertising_led_low_active = false
+
+
 
 [behavior.combo]
 timeout = "150ms"
