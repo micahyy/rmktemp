@@ -61,13 +61,13 @@ my_copy = "WM(C, LCtrl)"
 my_paste = "WM(V, LCtrl)"
 
 [light]
-capslock.pin = "P1_13"
-capslock.low_active = false
-scrolllock.pin = "P0_28"
-scrolllock.low_active = false
+# capslock.pin = "P1_13"
+# capslock.low_active = false
+# scrolllock.pin = "P0_28"
+# scrolllock.low_active = false
 # 这是我们要用来显示蓝牙状态的 LED
-numslock.pin = "P1_11"
-numslock.low_active = false 
+# numslock.pin = "P1_11"
+# numslock.low_active = false 
 
 # ==================== 关键修改：移除 indicators 字段 ====================
 [storage]
@@ -77,9 +77,14 @@ clear_storage = true
 [ble]
 enabled = true
 battery_adc_pin = "P0_04"
-adc_divider_measured = 250
-adc_divider_total = 500
-charge_led = { pin = "P1_11", low_active = false }
+adc_divider_measured = 50
+adc_divider_total = 100
+
+
+# [Deprecated] Pin that reads battery's charging state, `low-active` means the battery is charging when `charge_state.pin` is low 充电的时候1.13引脚指示灯会亮？
+charge_state = { pin = "P1_13", low_active = true }
+# [Deprecated] Output LED pin that blinks when the battery is low 是不是0.28pin低电量会闪烁？
+charge_led= { pin = "P0_28", low_active = true }
 
 # 可选：设置蓝牙发射功率（0-8，默认4）
 default_tx_power = 4
